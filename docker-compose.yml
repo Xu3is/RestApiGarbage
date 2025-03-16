@@ -1,0 +1,20 @@
+services:
+  app:
+    build: ./
+    command: ./waiting.sh db ./restapigarbage
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=swinota
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=swinota
+    ports:
+      - 5432:5432

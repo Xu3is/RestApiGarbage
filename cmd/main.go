@@ -6,7 +6,6 @@ import (
 	"github.com/Xu3is/RestApiGarbage/pkg/handler"
 	"github.com/Xu3is/RestApiGarbage/pkg/repository"
 	"github.com/Xu3is/RestApiGarbage/pkg/service"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -25,11 +24,6 @@ func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("can't init config: %s", err.Error())
-	}
-
-	err := godotenv.Load()
-	if err != nil {
-		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
