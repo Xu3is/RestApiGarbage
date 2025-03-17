@@ -1,9 +1,9 @@
-DROP TABLE lists_items;
+DROP TABLE payments;
 
-DROP TABLE users_lists;
+DROP TABLE students;
 
-DROP TABLE todo_lists;
+DROP TABLE lessons;
 
-DROP TABLE users;
+DROP TABLE trainers;
 
-DROP TABLE todo_items;
+DROP TABLE courses;
