@@ -1,16 +1,8 @@
 package handler
 
-import (
-	"github.com/Xu3is/RestApiGarbage/pkg/service"
-	"github.com/gin-gonic/gin"
-)
+import "github.com/gin-gonic/gin"
 
 type Handler struct {
-	services *service.Service
-}
-
-func NewHandler(services *service.Service) *Handler {
-	return &Handler{services: services}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -18,32 +10,45 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	auth := router.Group("/auth")
 	{
-		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	api := router.Group("/api", h.userIdentity)
+	api := router.Group("/api")
 	{
-		lists := api.Group("/lists")
+		courses := api.Group("/courses")
 		{
-			lists.POST("/", h.createList)
-			lists.GET("/", h.getAllLists)
-			lists.GET("/:id", h.getListById)
-			lists.PUT("/:id", h.updateList)
-			lists.DELETE("/:id", h.deleteList)
-
-			items := lists.Group(":id/items")
-			{
-				items.POST("/", h.createItem)
-				items.GET("/", h.getAllItems)
-			}
+			courses.GET("/courses", h.getCourses)
+			courses.POST("/courses", h.createCourse)
+			courses.PUT("/courses/:id", h.updateCourse)
+			courses.DELETE("/courses/:id", h.deleteCourse)
 		}
-
-		items := api.Group("items")
+		trainers := api.Group("/trainers")
 		{
-			items.GET("/:id", h.getItemById)
-			items.PUT("/:id", h.updateItem)
-			items.DELETE("/:id", h.deleteItem)
+			trainers.GET("/trainers", h.getTrainers)
+			trainers.POST("/trainers", h.createTrainer)
+			trainers.PUT("/trainers/:id", h.updateTrainer)
+			trainers.DELETE("/trainers/:id", h.deleteTrainer)
+		}
+		lessons := api.Group("/lessons")
+		{
+			lessons.GET("/lessons", h.getLessons)
+			lessons.POST("/lessons", h.createLesson)
+			lessons.PUT("/lessons/:id", h.updateLesson)
+			lessons.DELETE("/lessons/:id", h.deleteLesson)
+		}
+		students := api.Group("/students")
+		{
+			students.GET("/students", h.getStudents)
+			students.POST("/students", h.createStudent)
+			students.PUT("/students/:id", h.updateStudent)
+			students.DELETE("/students/:id", h.deleteStudent)
+		}
+		payments := api.Group("/payments")
+		{
+			payments.GET("/payments", h.getPayments)
+			payments.POST("/payments", h.createPayment)
+			payments.PUT("/payments/:id", h.updatePayment)
+			payments.DELETE("/payments/:id", h.deletePayment)
 		}
 	}
 
